@@ -1,4 +1,5 @@
 <?php
+ob_start(); // starts output buffering so headers (like redirects) can be sent even if login.php outputs HTML
 $page = isset($_GET['page']) ? $_GET['page'] : 'login';
 
 switch ($page) {
