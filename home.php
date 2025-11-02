@@ -1,24 +1,5 @@
 <?php require("connect-db.php"); ?>
-<?php require("request-db.php"); ?>
 
-<?php
-$isExistingUser = null;
-$loginStatus = null;
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST')
-{
-  if (!empty($_POST['submitBtn']))
-  {
-    $isExistingUser = checkIfUserExists($_POST['computingid'], $_POST['password']);
-    if (!empty($isExistingUser)) {
-      header("Location: home.php");
-      exit();
-    } else {
-      $loginStatus = "Login failed";
-    }
-  }
-}
-?>
 
 <!DOCTYPE html>
 <html>
@@ -34,22 +15,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   </head>
   <body>  
     <?php include("header.php") ?> 
-
-    <?php 
-      if (!empty($loginStatus)) {
-          echo "<div class='alert alert-danger'>Login failed. Please check your computing ID or password.</div>";
-      }
-    ?>
-
-    <h1>Sign in to CavClubs</h1>
-      <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-      Computing ID: <input type="text" name="computingid" class="form-control" /> <br /> 
-      Password: <input type="text" name="password" class="form-control" /> <br /> 
-      <input type="submit" name="submitBtn" value="Submit" class="btn btn-primary" />
-    </form>
-
-    <h2>New to CavClubs? Create an account. </h2>
-
     <?php // include('footer.html') ?> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   </body>

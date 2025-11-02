@@ -11,7 +11,7 @@ $isAppEngine = getenv('GAE_ENV') === 'standard';
 if ($isAppEngine) {
     $dsn = "mysql:unix_socket=/cloudsql/$cloudhost;dbname=$dbname"; //run on gcp cloud app engine
 } else { 
-    $dsn = "mysql:host=$localhost;dbnamze=$dbname"; //run locally
+    $dsn = "mysql:host=$localhost;dbname=$dbname"; //run locally
 }
 
 /** connect to the database **/
@@ -20,7 +20,7 @@ try
    $db = new PDO($dsn, $username, $password);
    
    // display a message to let us know that we are connected to the database 
-   echo "<p>You are connected to the database! </p>";
+   // echo "<p>You are connected to the database! </p>";
 }
 catch (PDOException $e)     
 {
