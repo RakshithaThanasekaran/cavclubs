@@ -21,35 +21,64 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="author" content="Shriya, Vivian, Pallavi, & Rakshitha">
-    <meta name="description" content="CS 4750 Final Project">
-    <meta name="keywords" content="CS 4750, CIO, UVA">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">  
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">  
-  </head>
-  <body>  
-    <?php include("header.php") ?> 
 
-    <h1>Create an account</h1>
-    <form method="post" action="index.php?page=create_account">
-        First Name: <input type="text" name="firstname" class="form-control" required /> <br /> 
-        Last Name: <input type="text" name="lastname" class="form-control" required /> <br /> 
-        Computing ID: <input type="text" name="computingid" class="form-control" required /> <br /> 
-        Email: <input type="text" name="email" class="form-control" required /> <br /> 
-        Year: <input type="text" name="year" class="form-control" required /> <br /> 
-        Date Of Birth: <input type="text" name="dob" class="form-control" required /> <br /> 
-        <p> Address: </p> <br /> 
-        Street: <input type="text" name="street" class="form-control" required /> <br /> 
-        City: <input type="text" name="city" class="form-control" required /> <br /> 
-        State: <input type="text" name="state" class="form-control" required /> <br /> 
-        Zipcode: <input type="text" name="zipcode" class="form-control" required /> <br /> 
-        Password: <input type="text" name="password" class="form-control" required /> <br /> 
-        <input type="submit" name="submitBtn" value="Submit" class="btn btn-primary" required />
-    </form>
+  <?php require("base.php"); ?>
+
+  <body>  
+    <div class="form-container">
+      <div class="large-form-box">
+        <h1>Create an account</h1>
+        <form method="post" action="">
+          <div class="mb-3">
+            <label for="firstname" class="form-label">First Name</label>
+            <input type="text" name="firstname" id="firstname" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input type="text" name="lastname" id="lastname" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="computingid" class="form-label">Computing ID</label>
+            <input type="text" name="computingid" id="computingid" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="text" name="email" id="email" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="year" class="form-label">Year</label>
+            <input type="text" name="year" id="year" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input type="text" name="dob" id="dob" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="street" class="form-label">Street</label>
+            <input type="text" name="street" id="street" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" name="city" id="city" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="state" class="form-label">State</label>
+            <input type="text" name="state" id="state" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="zipcode" class="form-label">Zip Code</label>
+            <input type="text" name="zipcode" id="zipcode" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="password" id="password" class="form-control" required>
+          </div>
+          <button type="submit" name="submitBtn" value="Submit" class="btn btn-primary w-100">Create Account</button>
+        </form>
+      </div>
+    </div>
+    <br>
+    <br>
 
     <?php // include('footer.html') ?> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
