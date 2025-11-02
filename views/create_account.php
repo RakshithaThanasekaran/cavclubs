@@ -1,19 +1,27 @@
 <?php require("connect-db.php"); ?>
 <?php require("request-db.php"); ?>
 
+
 <?php
+$errorMessage = null;
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
   if (!empty($_POST['submitBtn']))
   {
-    if (createUser($_POST['firstname'], $_POST['lastname'], $_POST['computingid'], $_POST['email'], $_POST['year'], $_POST['dob'], $_POST['street'], $_POST['city'], $_POST['state'], $_POST['zipcode'], $_POST['password']))
+    if(isUniqueEmail($_POST['email']))
     {
+      if(isUniqueComputingID($_POST['computingid']))
+      {
+        createUser($_POST['firstname'], $_POST['lastname'], $_POST['computingid'], $_POST['email'], $_POST['year'], $_POST['dob'], $_POST['street'], $_POST['city'], $_POST['state'], $_POST['zipcode'], $_POST['password']);
         header("Location: index.php?page=home");
         exit();
+      }
+      else 
+        $errorMessage = "An account with the provided computing ID already exists.";
     }
-    else {
-
-    }
+    else
+      $errorMessage = "An account with the provided email already exists.";
   }
 }
 ?>
@@ -24,53 +32,75 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
 
   <?php require("base.php"); ?>
 
+  <?php 
+      if ($errorMessage != null) {
+          echo "<div class='alert alert-danger alert-dismissable'>{$errorMessage}</div>";
+      }
+  ?>
+
   <body>  
     <div class="form-container">
       <div class="large-form-box">
         <h1>Create an account</h1>
         <form method="post" action="">
           <div class="mb-3">
-            <label for="firstname" class="form-label">First Name</label>
+            <label for="firstname" class="form-label">First Name*</label>
             <input type="text" name="firstname" id="firstname" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="lastname" class="form-label">Last Name</label>
+            <label for="lastname" class="form-label">Last Name*</label>
             <input type="text" name="lastname" id="lastname" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="computingid" class="form-label">Computing ID</label>
+            <label for="computingid" class="form-label">Computing ID*</label>
             <input type="text" name="computingid" id="computingid" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">Email*</label>
             <input type="text" name="email" id="email" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="year" class="form-label">Year</label>
-            <input type="text" name="year" id="year" class="form-control" required>
+            <label class="form-label">Year*</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="year" id="year1" value="1" checked>
+                <label class="form-check-label" for="year1">1</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="year" id="year2" value="2">
+                <label class="form-check-label" for="year2">2</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="year" id="year3" value="3">
+                <label class="form-check-label" for="year3">3</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="year" id="year4" value="4">
+                <label class="form-check-label" for="year4">4</label>
+            </div>
+        </div>
+            
+          <div class="mb-3">
+            <label for="dob" class="form-label">Date of Birth*</label>
+            <input type="date" name="dob" id="dob" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="dob" class="form-label">Date of Birth</label>
-            <input type="text" name="dob" id="dob" class="form-control" required>
-          </div>
-          <div class="mb-3">
-            <label for="street" class="form-label">Street</label>
+            <label for="street" class="form-label">Street*</label>
             <input type="text" name="street" id="street" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="city" class="form-label">City</label>
+            <label for="city" class="form-label">City*</label>
             <input type="text" name="city" id="city" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="state" class="form-label">State</label>
+            <label for="state" class="form-label">State*</label>
             <input type="text" name="state" id="state" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="zipcode" class="form-label">Zip Code</label>
+            <label for="zipcode" class="form-label">Zip Code*</label>
             <input type="text" name="zipcode" id="zipcode" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">Password*</label>
             <input type="password" name="password" id="password" class="form-control" required>
           </div>
           <button type="submit" name="submitBtn" value="Submit" class="btn btn-primary w-100">Create Account</button>

@@ -13,6 +13,37 @@ function checkIfUserExists($computingID, $password)
     return $result;
 }
 
+function isUniqueEmail($email) 
+{
+    global $db;
+    $query = "SELECT 1 FROM student WHERE email = :email LIMIT 1";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':email', $email);
+    $statement->execute();
+    
+    $row = $statement->fetch(); // fetch 1 row, returns false if no row is fetched
+    $statement->closeCursor();
+
+    if ($row==false) return true;
+    else return false;
+}
+
+
+function isUniqueComputingID($computingID) 
+{
+    global $db;
+    $query = "SELECT 1 FROM student WHERE computing_ID = :computingID LIMIT 1";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    
+    $row = $statement->fetch(); // fetch 1 row, returns false if no row is fetched
+    $statement->closeCursor();
+
+    if ($row==false) return true; //if no row is returned, then the computing ID is a new / unique one
+    else return false;
+}
+
 function createUser($firstname, $lastname, $computingid, $email, $year, $dob, $street, $city, $state, $zipcode, $password) 
 {
     global $db;
