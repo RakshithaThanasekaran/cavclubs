@@ -8,8 +8,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   {
     if (createUser($_POST['firstname'], $_POST['lastname'], $_POST['computingid'], $_POST['email'], $_POST['year'], $_POST['dob'], $_POST['street'], $_POST['city'], $_POST['state'], $_POST['zipcode'], $_POST['password']))
     {
-        header("Location: home.php");
+        header("Location: index.php?page=home");
         exit();
+    }
+    else {
+
     }
   }
 }
@@ -32,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     <?php include("header.php") ?> 
 
     <h1>Create an account</h1>
-    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+    <form method="post" action="index.php?page=create_account">
         First Name: <input type="text" name="firstname" class="form-control" required /> <br /> 
         Last Name: <input type="text" name="lastname" class="form-control" required /> <br /> 
         Computing ID: <input type="text" name="computingid" class="form-control" required /> <br /> 

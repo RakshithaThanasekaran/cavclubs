@@ -4,7 +4,7 @@
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
     <div class="container-fluid">            
       <a class="navbar-brand  d-flex align-items-center" href="/"> 
-        <img src="images/logo.png" alt="Your Logo" width="40" height="40" class="d-inline-block align-text-top">
+        <img src="images/logo.png" alt="CavClubs Logo" width="40" height="40" class="d-inline-block align-text-top">
         <span style="color: #dbdbdb">CavClubs</span>
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar" aria-controls="collapsibleNavbar" aria-expanded="false" aria-label="Toggle navigation">

@@ -1,4 +1,7 @@
 runtime: php83
 
-entrypoint: serve request.php
+entrypoint: serve index.php
 
+handlers:
+- url: /images
+  static_dir: images

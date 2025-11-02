@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
   {
     $isExistingUser = checkIfUserExists($_POST['computingid'], $_POST['password']);
     if (!empty($isExistingUser)) {
-      header("Location: home.php");
+      header("Location: index.php?page=home");
       exit();
     } else {
       $loginStatus = "Login failed";
@@ -42,13 +42,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
     ?>
 
     <h1>Sign in to CavClubs</h1>
-      <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+      <form method="post" action="index.php?page=login">
       Computing ID: <input type="text" name="computingid" class="form-control" /> <br /> 
       Password: <input type="text" name="password" class="form-control" /> <br /> 
       <input type="submit" name="submitBtn" value="Submit" class="btn btn-primary" />
     </form>
 
-    <p>New to CavClubs? <a href="create_account.php"> Create an account.</a> </p>
+    <p>New to CavClubs? <a href="index.php?page=create_account"> Create an account.</a> </p>
 
     <?php // include('footer.html') ?> 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
