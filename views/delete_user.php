@@ -1,37 +1,39 @@
 <?php
 include 'connect-db.php'; 
 
-header("Content-Type: application/json; charset=UTF-8");
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
-// Handle preflight requests
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
+// If form submitted:
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $user_id = $_POST['user_id'] ?? null;
 
     if (!$user_id) {
-        echo json_encode(['status' => 'error', 'message' => 'Missing user ID']);
-        exit;
-    }
-
-    $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
-    $stmt->bind_param("i", $user_id);
-
-    if ($stmt->execute()) {
-        echo json_encode(['status' => 'success', 'message' => 'User deleted successfully']);
+        $message = "Missing user ID.";
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Failed to delete user']);
-    }
+        $stmt = $conn->prepare("DELETE FROM users WHERE id = ?");
+        $stmt->bind_param("i", $user_id);
 
-    $stmt->close();
-    $conn->close();
-} else {
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request method']);
+        if ($stmt->execute()) {
+            $message = "User deleted successfully.";
+        } else {
+            $message = "Failed to delete user.";
+        }
+
+        $stmt->close();
+        $conn->close();
+    }
 }
 ?>
+
+<!-- Frontend UI -->
+<h2>Delete User</h2>
+
+<?php if (!empty($message)): ?>
+    <p><?php echo $message; ?></p>
+<?php endif; ?>
+
+<form method="POST" action="">
+    <label>User ID:</label>
+    <input type="number" name="user_id" required>
+    <button type="submit">Delete User</button>
+</form>
+
+<p><a href="index.php?page=home">Back to Home</a></p>
