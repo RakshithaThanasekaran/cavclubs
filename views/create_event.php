@@ -1,5 +1,5 @@
 <?php
-include 'connect-db.php'; // Use the same connection naming convention as other files
+include 'connect-db.php'; // uses $db (PDO connection)
 
 $message = '';
 
@@ -8,27 +8,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $description = $_POST['description'] ?? '';
     $date = $_POST['date'] ?? '';
     $location = $_POST['location'] ?? '';
-    $created_by = $_POST['created_by'] ?? ''; // computing_ID or user_id of the creator
+    $created_by = $_POST['created_by'] ?? '';
 
     if (!$title || !$date || !$location || !$created_by) {
         $message = "Missing required fields. Please fill out all fields.";
     } else {
-        $stmt = $conn->prepare("INSERT INTO events (title, description, date, location, created_by) VALUES (?, ?, ?, ?, ?)");
-        $stmt->bind_param("ssssi", $title, $description, $date, $location, $created_by);
-
-        if ($stmt->execute()) {
+        try {
+            $stmt = $db->prepare(
+                "INSERT INTO events (title, description, date, location, created_by)
+                 VALUES (:title, :description, :date, :location, :created_by)"
+            );
+            $stmt->execute([
+                ':title' => $title,
+                ':description' => $description,
+                ':date' => $date,
+                ':location' => $location,
+                ':created_by' => $created_by
+            ]);
             $message = "Event created successfully!";
-        } else {
-            $message = "Failed to create event. Please try again.";
+        } catch (PDOException $e) {
+            $message = "Failed to create event: " . htmlspecialchars($e->getMessage());
         }
-
-        $stmt->close();
-        $conn->close();
     }
 }
 ?>
 
-<!-- Frontend UI -->
 <h2>Create a New Event</h2>
 
 <?php if (!empty($message)): ?>
@@ -50,8 +54,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <label>Created By (User ID):</label><br>
     <input type="number" name="created_by" required><br><br>
-
-    <button type="submit">Create Event</button>
-</form>
-
-<p><a href="index.php?page=home">Back to Home</a></p>
