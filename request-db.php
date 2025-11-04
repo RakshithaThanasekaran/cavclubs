@@ -140,5 +140,38 @@ function updateUserProfile($computingID, $first, $last, $email, $year, $city, $s
   $statement->closeCursor();
 }
 
+function deleteUser($computingID) {
+    global $db;
+    $query = "DELETE FROM student WHERE computing_ID = :computingID";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':computingID', $computingID);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function createEvent($eventName, $description, $location, $date, $time) {
+    global $db;
+    $query = "INSERT INTO events (event_name, description, location, event_date, event_time)
+              VALUES (:eventName, :description, :location, :eventDate, :eventTime)";
+    $statement = $db->prepare($query);
+    $statement->bindValue(':eventName', $eventName);
+    $statement->bindValue(':description', $description);
+    $statement->bindValue(':location', $location);
+    $statement->bindValue(':eventDate', $date);
+    $statement->bindValue(':eventTime', $time);
+    $statement->execute();
+    $statement->closeCursor();
+}
+
+function getAllEvents() {
+    global $db;
+    $query = "SELECT * FROM events ORDER BY event_date DESC";
+    $statement = $db->prepare($query);
+    $statement->execute();
+    $results = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $statement->closeCursor();
+    return $results;
+}
+
 
 ?>
