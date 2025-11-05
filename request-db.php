@@ -192,18 +192,26 @@ function deleteUser($computingID) {
     $statement->closeCursor();
 }
 
-function createEvent($eventName, $description, $location, $date, $time) {
-    global $db;
-    $query = "INSERT INTO event (event_name, description, location, event_date, event_time)
-              VALUES (:eventName, :description, :location, :eventDate, :eventTime)";
-    $statement = $db->prepare($query);
-    $statement->bindValue(':eventName', $eventName);
-    $statement->bindValue(':description', $description);
-    $statement->bindValue(':location', $location);
-    $statement->bindValue(':eventDate', $date);
-    $statement->bindValue(':eventTime', $time);
-    $statement->execute();
-    $statement->closeCursor();
+function createEvent($title, $description, $month_date, $day_date, $year_date, $start_time, $end_time, $venue_id, $cio_id, $computing_ID) {
+  global $db;
+
+  $query = "INSERT INTO Events (title, description, month_date, day_date, year_date, start_time, end_time, venue_id, cio_id, computing_ID)
+            VALUES (:title, :description, :month_date, :day_date, :year_date, :start_time, :end_time, :venue_id, :cio_id, :computing_ID)";
+
+  $statement = $db->prepare($query);
+  $statement->bindValue(':title', $title);
+  $statement->bindValue(':description', $description);
+  $statement->bindValue(':month_date', $month_date);
+  $statement->bindValue(':day_date', $day_date);
+  $statement->bindValue(':year_date', $year_date);
+  $statement->bindValue(':start_time', $start_time);
+  $statement->bindValue(':end_time', $end_time);
+  $statement->bindValue(':venue_id', $venue_id);
+  $statement->bindValue(':cio_id', $cio_id);
+  $statement->bindValue(':computing_ID', $computing_ID);
+
+  $statement->execute();
+  $statement->closeCursor();
 }
 
 function getAllEvents() {

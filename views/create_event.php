@@ -1,29 +1,39 @@
 <?php
 include 'connect-db.php'; // uses $db (PDO connection)
-
 $message = '';
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['createEventBtn'])) {
     $title = $_POST['title'] ?? '';
     $description = $_POST['description'] ?? '';
-    $date = $_POST['date'] ?? '';
-    $location = $_POST['location'] ?? '';
-    $created_by = $_POST['created_by'] ?? '';
+    $month_date = $_POST['month_date'] ?? '';
+    $day_date = $_POST['day_date'] ?? '';
+    $year_date = $_POST['year_date'] ?? '';
+    $start_time = $_POST['start_time'] ?? '';
+    $end_time = $_POST['end_time'] ?? '';
+    $venue_id = $_POST['venue_id'] ?? '';
+    $cio_id = $_POST['cio_id'] ?? '';
+    $computing_ID = $_POST['computing_ID'] ?? '';
 
-    if (!$title || !$date || !$location || !$created_by) {
+    // Validate required fields
+    if (!$title || !$month_date || !$day_date || !$year_date || !$start_time || !$end_time || !$venue_id || !$cio_id || !$computing_ID) {
         $message = "Missing required fields. Please fill out all fields.";
     } else {
         try {
             $stmt = $db->prepare(
-                "INSERT INTO event (title, description, date, location, created_by)
-                 VALUES (:title, :description, :date, :location, :created_by)"
+                "INSERT INTO event (title, description, month_date, day_date, year_date, start_time, end_time, venue_id, cio_id, computing_ID)
+                 VALUES (:title, :description, :month_date, :day_date, :year_date, :start_time, :end_time, :venue_id, :cio_id, :computing_ID)"
             );
             $stmt->execute([
                 ':title' => $title,
                 ':description' => $description,
-                ':date' => $date,
-                ':location' => $location,
-                ':created_by' => $created_by
+                ':month_date' => $month_date,
+                ':day_date' => $day_date,
+                ':year_date' => $year_date,
+                ':start_time' => $start_time,
+                ':end_time' => $end_time,
+                ':venue_id' => $venue_id,
+                ':cio_id' => $cio_id,
+                ':computing_ID' => $computing_ID
             ]);
             $message = "Event created successfully!";
         } catch (PDOException $e) {
@@ -39,22 +49,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <p><?php echo $message; ?></p>
 <?php endif; ?>
 
-<form method="POST" action="">
-    <label>Title:</label><br>
-    <input type="text" name="title" required><br><br>
+<form method="post" action="">
+  <input type="text" name="title" placeholder="Event Title" required>
+  <textarea name="description" placeholder="Event Description"></textarea>
 
-    <label>Description:</label><br>
-    <textarea name="description" rows="4" cols="40"></textarea><br><br>
+  <input type="number" name="month_date" placeholder="Month (e.g. 11)" min="1" max="12" required>
+  <input type="number" name="day_date" placeholder="Day (e.g. 5)" min="1" max="31" required>
+  <input type="number" name="year_date" placeholder="Year (e.g. 2025)" min="2024" required>
 
-    <label>Date:</label><br>
-    <input type="date" name="date" required><br><br>
+  <input type="time" name="start_time" required>
+  <input type="time" name="end_time" required>
 
-    <label>Location:</label><br>
-    <input type="text" name="location" required><br><br>
+  <input type="text" name="venue_id" placeholder="Venue ID" required>
+  <input type="text" name="cio_id" placeholder="CIO ID" required>
+  <input type="text" name="computing_ID" placeholder="Creator Computing ID" required>
 
-    <label>Created By (User ID):</label><br>
-    <input type="number" name="created_by" required><br><br>
-    <button type="submit">Create Event</button>
+  <button type="submit" name="createEventBtn">Create Event</button>
 </form>
 
-<p><a href="index.php?page=home">Back to Home</a></p>   
+<p><a href="index.php?page=home">Back to Home</a></p>
