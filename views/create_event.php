@@ -54,3 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <label>Created By (User ID):</label><br>
     <input type="number" name="created_by" required><br><br>
+    <button type="submit">Create Event</button>
+</form>
+
+<p><a href="index.php?page=home">Back to Home</a></p>   
