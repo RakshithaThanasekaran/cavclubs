@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $message = "Missing user ID.";
     } else {
         try {
-            $stmt = $db->prepare("DELETE FROM users WHERE id = :id");
-            $stmt->execute([':id' => $user_id]);
+            $stmt = $db->prepare("DELETE FROM student WHERE id = :id");
+            $stmt->execute([':id' => $computing_ID]);
             $message = "User deleted successfully.";
         } catch (PDOException $e) {
             $message = "Error deleting user: " . htmlspecialchars($e->getMessage());
@@ -27,8 +27,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php endif; ?>
 
 <form method="POST" action="">
-    <label>User ID:</label>
-    <input type="number" name="user_id" required>
+    <label>Computing ID:</label>
+    <input type="number" name="computing_id" required>
     <button type="submit">Delete User</button>
 </form>
 
