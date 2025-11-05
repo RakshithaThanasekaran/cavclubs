@@ -3,9 +3,9 @@ include 'connect-db.php'; // uses $db (PDO connection)
 
 try {
     $query = "SELECT e.id, e.title, e.description, e.date, e.location, u.username AS created_by
-              FROM events e
-              JOIN users u ON e.created_by = u.id
-              ORDER BY e.date ASC";
+          FROM event e
+          JOIN users u ON e.created_by = u.id
+          ORDER BY e.date ASC";
 
     $stmt = $db->prepare($query);
     $stmt->execute();
