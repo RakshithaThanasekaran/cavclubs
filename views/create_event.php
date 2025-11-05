@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         try {
             $stmt = $db->prepare(
-                "INSERT INTO events (title, description, date, location, created_by)
+                "INSERT INTO event (title, description, date, location, created_by)
                  VALUES (:title, :description, :date, :location, :created_by)"
             );
             $stmt->execute([
